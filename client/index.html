@@ -62,10 +62,9 @@
     
     <script src="app/domain/Negociacao/Negociacao.js"></script>
     <script type="text/javascript">
-        var n1 = new Negociacao(new Date(), 5, 700);           
-        var volume = n1.obtemVolume();
-
-        console.log(volume)
+        var n1 = new Negociacao(new Date(), 5, 700);
+        n1.quantidade = 10;
+        console.log(n1.Quantidade);
     </script>
 
 </body>

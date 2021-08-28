@@ -2,7 +2,16 @@ class NegociacaoController {
 
 	adiciona(evento) {
 		event.preventDefault();
-		alert("chamei ação no controller")
+
+		const $ = document.querySelector.bind(document);
+		
+		const inputData = $("#data");
+		const inputQuantidade = $("#quantidade");
+		const inputValor = $("#valor");
+
+		console.log(inputData.value);
+		console.log(inputValor.value);
+		console.log(inputQuantidade.value);
 	}
 }
 

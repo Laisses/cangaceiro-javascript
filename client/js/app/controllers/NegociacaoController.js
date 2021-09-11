@@ -2,23 +2,56 @@ class NegociacaoController {
 	constructor() {
 		const $ = document.querySelector.bind(document);
 		
-		this.inputData = $("#data");
-		this.inputQuantidade = $("#quantidade");
-		this.inputValor = $("#valor");
-	}
-	
+		this._inputData = $("#data");
+		this._inputQuantidade = $("#quantidade");
+		this._inputValor = $("#valor");
+		this._listaNegociacoes = new ListaNegociacoes();
 
+		this._negociacoesView = new NegociacoesView($("#negociacoesView"));
+		this._negociacoesView.update(this._listaNegociacoes);
+
+		this._mensagem = new Mensagem();
+		this._mensagemView = new MensagemView($("#mensagemView"));
+		this._mensagemView.update(this._mensagem);
+	}
 
 	adiciona(evento) {
 		event.preventDefault();
 
-		
-		console.log(inputData.value);
-		console.log(inputValor.value);
-		console.log(inputQuantidade.value);
+		this._listaNegociacoes.adiciona(this._criaNegociacao());
+		this._negociacoesView.update(this._listaNegociacoes);
+
+		this._mensagem.texto = "Negociação adicionada com sucesso!";
+		this._mensagemView.update(this._mensagem);
+
+		this._limpaFormulario();
+	}
+
+	_criaNegociacao() {
+		return new Negociacao(
+			DateHelper.textoParaData(this._inputData.value),
+			parseInt(this._inputQuantidade.value),
+			parseFloat(this._inputValor.value)
+		);
+	}
+
+	_limpaFormulario() {
+		this._inputData.value = "";
+		this._inputQuantidade.value = 1;
+		this._inputValor.value = 2;
+
+		this._inputData.focus();
 	}
 }
 
 const negociacaoController = new NegociacaoController();
 
-document.querySelector("#formulario").onsubmit = negociacaoController.adiciona;
+document.querySelector("#formulario").onsubmit =
+	evento => negociacaoController.adiciona(evento);
+
+/*
+
+1. Por que criar o constructor melhora a performance?
+2. Como pegar a data do adiciona, sem colocar em uma variavel, tem como?
+
+*/
